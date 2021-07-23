@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public Long insert(UserEntity user){
+    public Long insert(@RequestBody UserEntity user){
         userService.insertUser(user);
         return user.getId();
     }
