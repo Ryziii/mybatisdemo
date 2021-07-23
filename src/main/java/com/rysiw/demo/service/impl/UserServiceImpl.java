@@ -21,9 +21,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> getAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        PageInfo<UserEntity> pageInfo = new PageInfo<UserEntity>((List<UserEntity>) userMapper.getAll());
+        PageInfo<UserEntity> pageInfo = new PageInfo<>(userMapper.getAll());
         Long total = pageInfo.getTotal();
         List<UserEntity> userEntityList = pageInfo.getList();
+        total = total == 0 ? userEntityList.size() : total;
         Map<String, Object> map = new HashMap<>();
         map.put("total", total);
         map.put("data", userEntityList);
