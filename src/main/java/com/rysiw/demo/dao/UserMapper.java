@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.rysiw.demo.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
 
+@Mapper
 public interface UserMapper {
 
     @Select("SELECT * FROM users")
