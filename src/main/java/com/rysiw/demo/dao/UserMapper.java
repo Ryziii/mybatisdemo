@@ -1,6 +1,6 @@
 package com.rysiw.demo.dao;
 
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.Page;
 import com.rysiw.demo.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
 
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.*;
 public interface UserMapper {
 
     @Select("SELECT * FROM users")
-    PageInfo<UserEntity> getAll();
+    Page<UserEntity> getAll();
 
     @Select("SELECT * FROM users WHERE id = #{id}")
     UserEntity getUserById(Long id);
