@@ -4,6 +4,7 @@ package com.rysiw.demo.controller;
 import com.rysiw.demo.common.ResultDTO;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
+@Api
 public class UserController {
 
     @Autowired

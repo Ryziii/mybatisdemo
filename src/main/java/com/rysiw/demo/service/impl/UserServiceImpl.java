@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.rysiw.demo.dao.UserMapper;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    Logger log = LogManager.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -28,12 +32,15 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = new HashMap<>();
         map.put("total", total);
         map.put("data", userEntityList);
+        log.info(map);
         return map;
     }
 
     @Override
     public UserEntity getUserById(Long id) {
-        return userMapper.getUserById(id);
+        UserEntity user = userMapper.getUserById(id);
+        log.info(user);
+        return user;
     }
 
     @Override
