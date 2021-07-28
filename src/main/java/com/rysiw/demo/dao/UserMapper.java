@@ -19,8 +19,8 @@ public interface UserMapper {
     void insert(UserEntity userEntity);
 
     @Update("UPDATE users SET username=#{username}, password=#{password}, phone=#{phone}, email=#{email} WHERE id=#{id}")
-    void update(UserEntity user);
+    Long update(UserEntity user);
 
     @Delete("DELETE FROM users WHERE id=#{id}")
-    void delete(Long id);
+    Long delete(Long id);
 }

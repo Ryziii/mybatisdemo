@@ -7,8 +7,6 @@ import com.rysiw.demo.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.server.PathParam;
 import java.util.Map;
 
 @RestController
@@ -43,9 +41,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public Long insert( UserEntity user){
-        userService.insertUser(user);
-        return user.getId();
+    public ResultDTO insert(UserEntity user){
+        return userService.insertUser(user);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -53,11 +50,8 @@ public class UserController {
         userService.update(user);
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public void delete(@PathVariable Long id){
-        userService.deleteById(id);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public ResultDTO deleteById(@PathVariable Long id){
+        return userService.deleteById(id);
     }
-
-
-
 }

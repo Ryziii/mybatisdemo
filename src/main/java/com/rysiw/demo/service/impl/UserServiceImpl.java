@@ -2,6 +2,7 @@ package com.rysiw.demo.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.rysiw.demo.common.ResultDTO;
 import com.rysiw.demo.dao.UserMapper;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
@@ -39,22 +40,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getUserById(Long id) {
         UserEntity user = userMapper.getUserById(id);
-        log.info(user);
+        log.info("通过id：{}查找用户，查找结果：{}",id,user);
         return user;
     }
 
     @Override
-    public void insertUser(UserEntity userEntity) {
-        userMapper.insert(userEntity);
+    public ResultDTO insertUser(UserEntity userEntity) {
+        try {
+            log.info("插入用户{}", userEntity);
+            Long id = userEntity.getId();
+            if (id != null) {
+                UserEntity user = getUserById(id);
+                if (user != null) {
+                    log.info("插入用户失败，用户已存在");
+                    return ResultDTO.builder().code(200).msg("创建用户失败，用户已存在").build();
+                }
+            }
+            userMapper.insert(userEntity);
+            return ResultDTO.builder().code(200).msg("创建用户成功").data(userEntity.getId()).build();
+        }catch (Exception e){
+            log.info("插入用户失败,插入数据:{}",userEntity);
+            return ResultDTO.builder().code(200).msg("创建用户失败").data(e.getLocalizedMessage()).build();
+        }
     }
 
     @Override
-    public void update(UserEntity userEntity) {
-        userMapper.update(userEntity);
+    public ResultDTO update(UserEntity userEntity) {
+        Long res = userMapper.update(userEntity);
+        return userMapper.update(userEntity) == 0 ?
+                ResultDTO.builder().code(200).msg("更新失败，无影响行数").build() :
+                ResultDTO.builder().code(200).msg("更新成功，影响行数：" + res).build();
     }
 
     @Override
-    public void deleteById(Long id) {
-        userMapper.delete(id);
+    public ResultDTO deleteById(Long id) {
+        try {
+            return userMapper.delete(id) == 0 ? ResultDTO.builder().code(200).msg("删除失败，无影响行数").build()
+                    : ResultDTO.builder().code(200).msg("删除成功").build();
+        }catch (Exception e){
+            return ResultDTO.builder().code(200).msg("删除失败").data(e.getLocalizedMessage()).build();
+        }
     }
 }
