@@ -1,6 +1,6 @@
 package com.rysiw.demo.service;
 
-import com.rysiw.demo.common.ResultDTO;
+import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.entity.UserEntity;
 
 import java.util.Map;
@@ -13,7 +13,7 @@ public interface UserService {
 
     ResultDTO insertUser(UserEntity userEntity);
 
-    ResultDTO update(UserEntity userEntity);
+    Boolean update(UserEntity userEntity);
 
     ResultDTO deleteById(Long id);
 }

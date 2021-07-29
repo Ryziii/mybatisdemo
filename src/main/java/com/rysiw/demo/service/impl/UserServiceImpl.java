@@ -2,7 +2,8 @@ package com.rysiw.demo.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.rysiw.demo.common.ResultDTO;
+import com.rysiw.demo.common.constant.RespCode;
+import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.dao.UserMapper;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
@@ -18,7 +19,7 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
 
-    Logger log = LogManager.getLogger(UserServiceImpl.class);
+    Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -33,52 +34,61 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = new HashMap<>();
         map.put("total", total);
         map.put("data", userEntityList);
-        log.info(map);
+        logger.info(map);
         return map;
     }
 
     @Override
     public UserEntity getUserById(Long id) {
         UserEntity user = userMapper.getUserById(id);
-        log.info("通过id：{}查找用户，查找结果：{}",id,user);
+        logger.info("通过id：{}查找用户，查找结果：{}",id,user);
         return user;
     }
 
     @Override
     public ResultDTO insertUser(UserEntity userEntity) {
         try {
-            log.info("插入用户{}", userEntity);
+            logger.info("插入用户{}", userEntity);
             Long id = userEntity.getId();
             if (id != null) {
                 UserEntity user = getUserById(id);
                 if (user != null) {
-                    log.info("插入用户失败，用户已存在");
-                    return ResultDTO.builder().code(200).msg("创建用户失败，用户已存在").build();
+                    logger.info("插入用户失败，用户已存在");
+                    return ResultDTO.builder().
+                            code(RespCode.SUCCESS.getCode()).
+                            msg("创建用户失败，用户已存在").
+                            build();
                 }
             }
             userMapper.insert(userEntity);
-            return ResultDTO.builder().code(200).msg("创建用户成功").data(userEntity.getId()).build();
+            return ResultDTO.builder().
+                    code(RespCode.SUCCESS.getCode()).
+                    msg("创建用户成功").
+                    data(userEntity).
+                    build();
         }catch (Exception e){
-            log.info("插入用户失败,插入数据:{}",userEntity);
-            return ResultDTO.builder().code(200).msg("创建用户失败").data(e.getLocalizedMessage()).build();
+            logger.info("插入用户失败,插入数据:{}",userEntity);
+            return ResultDTO.builder().
+                    code(RespCode.SUCCESS.getCode()).
+                    msg("创建用户失败").
+                    data(e.getLocalizedMessage()).
+                    build();
         }
     }
 
     @Override
-    public ResultDTO update(UserEntity userEntity) {
+    public Boolean update(UserEntity userEntity) {
         Long res = userMapper.update(userEntity);
-        return userMapper.update(userEntity) == 0 ?
-                ResultDTO.builder().code(200).msg("更新失败，无影响行数").build() :
-                ResultDTO.builder().code(200).msg("更新成功，影响行数：" + res).build();
+        return userMapper.update(userEntity) != 0;
     }
 
     @Override
     public ResultDTO deleteById(Long id) {
         try {
-            return userMapper.delete(id) == 0 ? ResultDTO.builder().code(200).msg("删除失败，无影响行数").build()
-                    : ResultDTO.builder().code(200).msg("删除成功").build();
+            return userMapper.delete(id) == 0 ? ResultDTO.builder().code(RespCode.SUCCESS.getCode()).msg("删除失败，无影响行数").build()
+                    : ResultDTO.builder().code(RespCode.SUCCESS.getCode()).msg("删除成功").build();
         }catch (Exception e){
-            return ResultDTO.builder().code(200).msg("删除失败").data(e.getLocalizedMessage()).build();
+            return ResultDTO.builder().code(RespCode.SUCCESS.getCode()).msg("删除失败").data(e.getLocalizedMessage()).build();
         }
     }
 }

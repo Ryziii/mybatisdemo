@@ -1,4 +1,4 @@
-package com.rysiw.demo.common;
+package com.rysiw.demo.common.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
 @Builder
 public class ResultDTO {
 
-    private Integer code;
+    private String code;
     private String msg;
     private Object data;
 }
