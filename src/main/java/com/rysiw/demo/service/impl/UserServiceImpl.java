@@ -7,8 +7,8 @@ import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.dao.UserMapper;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService {
 
-    Logger logger = LogManager.getLogger(UserServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserMapper userMapper;
@@ -30,11 +30,11 @@ public class UserServiceImpl implements UserService {
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userMapper.getAll());
         Long total = pageInfo.getTotal();
         List<UserEntity> userEntityList = pageInfo.getList();
+        logger.info(userEntityList.toString());
         total = total == 0 ? userEntityList.size() : total;
         Map<String, Object> map = new HashMap<>();
         map.put("total", total);
         map.put("data", userEntityList);
-        logger.info(map);
         return map;
     }
 

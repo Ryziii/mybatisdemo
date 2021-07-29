@@ -26,7 +26,7 @@ public class UserController {
 
         Map<String, Object> map = userService.getAll(pageNum, pageSize);
         if(map == null){
-            return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg("user为空").data(map).build();
+            return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg("user为空").build();
         }
         else{
             return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg("成功").data(map).build();
@@ -36,7 +36,7 @@ public class UserController {
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResultVO<Object> getUserById(@PathVariable Long id){
         UserEntity user = userService.getUserById(id);
-        ResultVO result = user == null ?
+        ResultVO<Object> result = user == null ?
                 ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg("无此id用户").data(null).build() :
                 ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg("成功").data(user).build();
         return result;
@@ -58,7 +58,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public ResultVO deleteById(@PathVariable Long id){
+    public ResultVO<Object> deleteById(@PathVariable Long id){
         return ResultUtil.resultDTO2resultVO(userService.deleteById(id));
     }
 }
