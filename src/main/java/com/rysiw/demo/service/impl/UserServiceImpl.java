@@ -91,4 +91,14 @@ public class UserServiceImpl implements UserService {
             return ResultDTO.builder().code(RespCode.SUCCESS.getCode()).msg("删除失败").data(e.getLocalizedMessage()).build();
         }
     }
+
+    @Override
+    public UserEntity getUserByUsername(String username) {
+        try{
+            return userMapper.getUserByUsername(username);
+        }catch (Exception e){
+            logger.error("查询用户失败，用户名：{}", username);
+            return null;
+        }
+    }
 }

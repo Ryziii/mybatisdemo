@@ -23,4 +23,7 @@ public interface UserMapper {
 
     @Delete("DELETE FROM users WHERE id=#{id}")
     Long delete(Long id);
+
+    @Select("SELECT * FROM users WHERE username=#{username}")
+    UserEntity getUserByUsername(String username);
 }

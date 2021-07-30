@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum RespCode {
 
-    SUCCESS("200","success");
+    SUCCESS("200","success"),
+    ERROR("0000","error");
 
     private final String code;
     private final String msg;

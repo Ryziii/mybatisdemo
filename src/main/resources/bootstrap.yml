@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: demo1
+  cloud:
+    nacos:
+      config:
+        server-addr: 120.48.9.152:8848
+        sharedConfigs: public.properties
+        file-extension: yaml
+        refresh-enabled: true
+        namespace: public
+      discovery:
+        server-addr: 120.48.9.152:8848
+        namespace: public
+  profiles:
+    active: local

@@ -12,6 +12,10 @@ public class ResultUtil {
         return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg(RespCode.SUCCESS.getMsg()).build();
     }
 
+    public static ResultVO<Object> getSuccessVO(String msg){
+        return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg(msg).build();
+    }
+
     public static ResultVO<Object> resultDTO2resultVO(ResultDTO resultDTO){
         ResultVO<Object> resultVO = ResultVO.builder().build();
         BeanUtils.copyProperties(resultDTO,resultVO);
@@ -22,4 +26,11 @@ public class ResultUtil {
         return ResultDTO.builder().code(RespCode.SUCCESS.getCode()).msg(RespCode.SUCCESS.getMsg()).build();
     }
 
+    public static ResultVO<Object> getErrorVO() {
+        return ResultVO.builder().code(RespCode.ERROR.getCode()).msg(RespCode.ERROR.getMsg()).build();
+    }
+
+    public static ResultVO<Object> getErrorVO(String msg) {
+        return ResultVO.builder().code(RespCode.ERROR.getCode()).msg(msg).build();
+    }
 }

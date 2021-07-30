@@ -16,4 +16,6 @@ public interface UserService {
     Boolean update(UserEntity userEntity);
 
     ResultDTO deleteById(Long id);
+
+    UserEntity getUserByUsername(String username);
 }
