@@ -1,6 +1,6 @@
 package com.rysiw.demo.controller;
 
-import com.rysiw.demo.common.constant.JWTUtils;
+import com.rysiw.demo.common.utils.JWTUtils;
 import com.rysiw.demo.common.utils.ResultUtil;
 import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;

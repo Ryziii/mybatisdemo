@@ -7,6 +7,8 @@ import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -16,6 +18,8 @@ import java.util.Map;
 @Api
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
@@ -23,7 +27,7 @@ public class UserController {
     public ResultVO<Object> getUsers(
             @RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
             @RequestParam(name = "pageSize", defaultValue = "2", required = false) int pageSize){
-
+        logger.info("getUsers, pageNum:{}, pageSize:{}", pageNum, pageSize);
         Map<String, Object> map = userService.getAll(pageNum, pageSize);
         if(map == null){
             return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg("user为空").build();
