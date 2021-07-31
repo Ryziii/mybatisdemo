@@ -6,7 +6,7 @@ spring:
     url: ${datasource.mysql.url}
 #    username: root
     username: ${datasource.mysql.username}
-    password: root
+    password: ">,oX8.Qr9(3*7q"
     driver-class-name: ${datasource.mysql.driverClassName}
 
 pagehelper:

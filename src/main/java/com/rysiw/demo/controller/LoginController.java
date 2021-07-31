@@ -1,5 +1,6 @@
 package com.rysiw.demo.controller;
 
+import com.rysiw.demo.common.constant.JWTUtils;
 import com.rysiw.demo.common.utils.ResultUtil;
 import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;
@@ -11,17 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/")
 public class LoginController {
 
+    private static final String JWT_HEADER_NAME = "Authorization";
+
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResultVO<Object> login(@RequestBody UserEntity user){
+    public ResultVO<Object> login(@RequestBody UserEntity user, HttpServletResponse response){
         if(StringUtils.isEmpty(user.getUsername())){
             return ResultUtil.getErrorVO("请输入正确的用户名");
         }
@@ -33,7 +37,8 @@ public class LoginController {
             return ResultUtil.getErrorVO("登录失败");
         }
         //TODO 登录成功使用jwt返回token
-
-        return ResultUtil.getSuccessVO();
+        String jwt = JWTUtils.generatorToken(user.getUsername());
+        response.setHeader(JWT_HEADER_NAME, jwt);
+        return ResultUtil.getSuccessVO(jwt);
     }
 }
