@@ -1,44 +1,46 @@
 package com.rysiw.demo.controller;
 
-import com.rysiw.demo.common.utils.JWTUtils;
 import com.rysiw.demo.common.utils.ResultUtil;
 import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;
+import com.rysiw.demo.service.AuthorizationService;
+import com.rysiw.demo.service.RedisService;
 import com.rysiw.demo.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/token")
 public class LoginController {
 
     private static final String JWT_HEADER_NAME = "Authorization";
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthorizationService authorizationService;
+    @Autowired
+    private RedisService redisService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResultVO<Object> login(@RequestBody UserEntity user, HttpServletResponse response){
-        if(StringUtils.isEmpty(user.getUsername())){
-            return ResultUtil.getErrorVO("请输入正确的用户名");
+    @RequestMapping(value = "/regis", method = RequestMethod.POST)
+    public ResultVO<Object> regisToken(
+            @Validated @RequestBody UserEntity reqUser,
+            HttpServletResponse response,
+            @RequestHeader HttpHeaders httpHeaders) throws Exception {
+
+        if(redisService.userTokenExists(reqUser)){
+            if(redisService.isTokenValid(reqUser, httpHeaders)) {
+                return ResultUtil.getSuccessVO("验证token成功");
+            }else{
+                return ResultUtil.getErrorVO("请携带与用户名对应的正确token");
+            }
         }
-        if(StringUtils.isEmpty(user.getPassword())){
-            return ResultUtil.getErrorVO("请输入正确的密码");
-        }
-        UserEntity userEntity = userService.getUserByUsername(user.getUsername());
-        if(Objects.isNull(userEntity) || !userEntity.getPassword().equals(user.getPassword())){
-            return ResultUtil.getErrorVO("登录失败");
-        }
-        //TODO 登录成功使用jwt返回token
-        String jwt = JWTUtils.generatorToken(user.getUsername());
+        String jwt = authorizationService.createToken(reqUser, httpHeaders);
         response.setHeader(JWT_HEADER_NAME, jwt);
-        return ResultUtil.getSuccessVO(jwt);
+        return ResultUtil.getSuccessVO();
     }
 }

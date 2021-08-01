@@ -24,9 +24,9 @@ public class CorsConfiguration implements WebMvcConfigurer {
         WebMvcConfigurer.super.addCorsMappings(registry);
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new ReqInterceptor()).addPathPatterns("/**");
-        WebMvcConfigurer.super.addInterceptors(registry);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new ReqInterceptor()).addPathPatterns("/**");
+//        WebMvcConfigurer.super.addInterceptors(registry);
+//    }
 }
