@@ -17,3 +17,15 @@ pagehelper:
   row-bounds-with-count: true
   page-size-zero: true
 
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /monitor
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
