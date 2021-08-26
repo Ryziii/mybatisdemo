@@ -1,6 +1,7 @@
 package com.rysiw.demo.controller;
 
 
+import com.rysiw.demo.annotations.VerifyToken;
 import com.rysiw.demo.common.constant.RespCode;
 import com.rysiw.demo.common.utils.ResultUtil;
 import com.rysiw.demo.common.vo.ResultVO;
@@ -23,6 +24,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @VerifyToken
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResultVO<Object> getUsers(
             @RequestParam(name = "pageNum", defaultValue = "1", required = false) int pageNum,
@@ -37,6 +39,7 @@ public class UserController {
         }
     }
 
+    @VerifyToken
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public ResultVO<Object> getUserById(@PathVariable Long id){
         UserEntity user = userService.getUserById(id);

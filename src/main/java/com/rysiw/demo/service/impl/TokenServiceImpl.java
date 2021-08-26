@@ -1,8 +1,10 @@
 package com.rysiw.demo.service.impl;
 
 import com.rysiw.demo.common.constant.SecurityConstants;
+import com.rysiw.demo.common.utils.JwtTokenUtils;
 import com.rysiw.demo.entity.UserEntity;
-import com.rysiw.demo.service.RedisService;
+import com.rysiw.demo.exception.MyException;
+import com.rysiw.demo.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +19,7 @@ import java.util.Objects;
  * @date 2021/8/1 18:41
  */
 @Service
-public class RedisServiceImpl implements RedisService {
+public class TokenServiceImpl implements TokenService {
 
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
@@ -26,7 +28,7 @@ public class RedisServiceImpl implements RedisService {
     public void addToken(String username, String jwt) throws Exception {
         try {
             redisTemplate.opsForValue().set(username, jwt);
-            redisTemplate.expireAt(username, new Date(new Date().getTime() + SecurityConstants.EXPIRATION_FORTEST * 1000));
+            redisTemplate.expireAt(username, new Date(new Date().getTime() + SecurityConstants.EXPIRATION_REMEMBER * 1000));
         }catch (Exception e){
             throw new Exception("存入redis错误");
         }
@@ -34,10 +36,22 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public boolean isTokenValid(UserEntity user, HttpHeaders httpHeaders) {
+        //TODO jwt就有username信息
         String username = user.getUsername();
         String token = httpHeaders.getFirst(SecurityConstants.TOKEN_HEADER);
+        return doIsTokenValid(username,token);
+    }
+
+    @Override
+    public boolean doIsTokenValid(String username, String token){
+
+        if(!JwtTokenUtils.isTokenValid(token))
+            throw new MyException(500,"token: jwt 解析异常");
         String tokenInRedis = (String) redisTemplate.opsForValue().get(username);
-        return Objects.equals(token, tokenInRedis);
+        if(!Objects.equals(token,tokenInRedis)){
+            throw new MyException(500,"token与用户名不匹配");
+        }
+        return true;
     }
 
     @Override

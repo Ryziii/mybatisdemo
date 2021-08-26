@@ -4,7 +4,7 @@ import com.rysiw.demo.common.utils.JwtTokenUtils;
 import com.rysiw.demo.dao.UserMapper;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.AuthorizationService;
-import com.rysiw.demo.service.RedisService;
+import com.rysiw.demo.service.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,11 +20,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private RedisService redisService;
+    private TokenService tokenService;
 
     @Override
     public String createToken(UserEntity reqUser, HttpHeaders httpHeaders) throws Exception {
-        boolean isUserTokenExists = redisService.userTokenExists(reqUser);
+        boolean isUserTokenExists = tokenService.userTokenExists(reqUser);
         if(isUserTokenExists){
             throw new Exception("用户token存活，无需重新注册");
         }
@@ -36,7 +36,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new Exception("密码错误");
         }
         String jwt = JwtTokenUtils.generatorToken(user.getUsername(), false);
-        redisService.addToken(reqUser.getUsername(),jwt);
+        tokenService.addToken(reqUser.getUsername(),jwt);
         return jwt;
     }
 }

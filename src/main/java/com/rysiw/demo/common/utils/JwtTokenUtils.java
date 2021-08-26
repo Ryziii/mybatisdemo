@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.SecretKey;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Rysiw
@@ -24,7 +25,7 @@ public class JwtTokenUtils {
 
     public static String generatorToken(String username, boolean isrRemember){
 //        long expiration = isrRemember ? SecurityConstants.EXPIRATION_REMEMBER : SecurityConstants.EXPIRATION;
-        long expiration = SecurityConstants.EXPIRATION_FORTEST;
+        long expiration = SecurityConstants.EXPIRATION_REMEMBER;
         Date expirationDate = new Date(new Date().getTime() + expiration * 1000);
         return Jwts.builder()
                 .setHeaderParam("type", SecurityConstants.TOKEN_TYPE)
@@ -43,6 +44,8 @@ public class JwtTokenUtils {
     }
 
     public static boolean isTokenValid(String jwt){
+        if(Objects.isNull(jwt))
+            return false;
         try{
             parseToken(jwt);
         }catch (Exception e){
