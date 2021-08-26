@@ -1,6 +1,5 @@
 package com.rysiw.demo.config;
 
-import com.rysiw.demo.common.interceptor.ReqInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
