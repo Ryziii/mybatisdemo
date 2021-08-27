@@ -43,15 +43,15 @@ public class RequestInterceptor implements HandlerInterceptor {
         return tokenService.doIsTokenValid(username, token);
     }
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        logger.info("Interceptor postHandle is running.");
-        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        logger.info("Interceptor afterHandle is running.");
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-    }
+//    @Override
+//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//        logger.info("Interceptor postHandle is running.");
+//        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+//    }
+//
+//    @Override
+//    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+//        logger.info("Interceptor afterHandle is running.");
+//        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+//    }
 }
