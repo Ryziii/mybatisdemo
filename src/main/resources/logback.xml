@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="false" scanPeriod="60000" debug="false">
+
+    <logger name="com.rysiw.demo.dao" level="DEBUG"/>
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>
