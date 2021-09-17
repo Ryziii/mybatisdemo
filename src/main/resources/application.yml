@@ -7,7 +7,7 @@ spring:
     url: ${datasource.mysql.url}
 #    username: root
     username: ${datasource.mysql.username}
-    password: ">,oX8.Qr9(3*7q"
+    password: root
     driver-class-name: ${datasource.mysql.driverClassName}
   redis:
     host: localhost
@@ -41,3 +41,5 @@ management:
       show-details: always
     shutdown:
       enabled: true
+
+test=test
