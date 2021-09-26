@@ -6,6 +6,7 @@ import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.common.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 
+//TODO 此类中的方法可以放在ResultVO中做
 public class ResultUtil {
 
     public static ResultVO<Object> getSuccessVO(){

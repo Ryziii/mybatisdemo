@@ -1,12 +1,11 @@
+
 server:
   port: 8081
   shutdown: graceful
 spring:
   datasource:
-#    url: jdbc:mysql://127.0.0.1:3306/django?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
-    url: ${datasource.mysql.url}
-#    username: root
-    username: ${datasource.mysql.username}
+    url: jdbc:mysql://127.0.0.1:3306/django?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true
+    username: root
     password: root
     driver-class-name: ${datasource.mysql.driverClassName}
   redis:
