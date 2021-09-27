@@ -1,29 +1,37 @@
 package com.rysiw.demo.exception;
 
+import com.rysiw.demo.common.constant.RespCode;
+import lombok.Data;
+
+@Data
 public class DefineException extends RuntimeException{
 
-    protected Integer errorCode;
-    protected String errorMsg;
+    protected String errorCode;
+    protected Object data;
 
     public DefineException(){
 
     }
 
-    public DefineException(Integer errorCode, String errorMsg){
+    public DefineException(String errorCode, String errorMsg){
+        super(errorMsg);
         this.errorCode = errorCode;
-        this.errorMsg = errorMsg;
     }
 
-    public Integer getErrorCode(){
-        return this.errorCode;
+    public DefineException(RespCode respCode){
+        super(respCode.getMsg());
+        this.errorCode = respCode.getCode();
     }
-    public String getErrorMsg(){
-        return this.errorMsg;
+
+    public DefineException(RespCode respCode, Object data){
+        super(respCode.getMsg());
+        this.errorCode = respCode.getCode();
+        this.data = data;
     }
-    public void setErrorCode(Integer errorCode){
-        this.errorCode = errorCode;
-    }
-    public void setErrorMsg(String errorMsg){
-        this.errorMsg = errorMsg;
+
+    public DefineException(Object data){
+        super(RespCode.ERROR.getMsg());
+        this.errorCode = RespCode.ERROR.getCode();
+        this.data = data;
     }
 }

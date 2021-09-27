@@ -35,16 +35,33 @@ public class ResultVO<T> {
 
      public static ResultVO buildDefineError(DefineException e){
           ResultVO resultVO = new ResultVO();
-          resultVO.code = String.valueOf(e.getErrorCode());
-          resultVO.msg = e.getErrorMsg();
+          resultVO.code = e.getErrorCode();
+          resultVO.msg = e.getMessage();
+          resultVO.data = e.getData();
           return resultVO;
      }
 
      public static ResultVO otherError(Exception e) {
           ResultVO resultVO = new ResultVO();
-          resultVO.code = "500";
+          resultVO.code = RespCode.ERROR.getCode();
           resultVO.msg = e.getMessage();
           resultVO.data = e.getStackTrace();
           return resultVO;
+     }
+
+     public static ResultVO<Object> getSuccessVO(){
+          return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg(RespCode.SUCCESS.getMsg()).build();
+     }
+
+     public static ResultVO<Object> getSuccessVO(String msg){
+          return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg(msg).build();
+     }
+
+     public static ResultVO<Object> getErrorVO() {
+          return ResultVO.builder().code(RespCode.ERROR.getCode()).msg(RespCode.ERROR.getMsg()).build();
+     }
+
+     public static ResultVO<Object> getErrorVO(String msg) {
+          return ResultVO.builder().code(RespCode.ERROR.getCode()).msg(msg).build();
      }
 }

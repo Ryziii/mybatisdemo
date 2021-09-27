@@ -35,13 +35,13 @@ public class LoginController {
         if(tokenService.userTokenExists(reqUser)){
             //TODO 是否需要reqUser
             if(tokenService.isTokenValid(reqUser, httpHeaders)) {
-                return ResultUtil.getSuccessVO("验证token成功");
+                return ResultVO.getSuccessVO("验证token成功");
             }else{
-                return ResultUtil.getErrorVO("请携带与用户名对应的正确token");
+                return ResultVO.getErrorVO("请携带与用户名对应的正确token");
             }
         }
         String jwt = authorizationService.createToken(reqUser, httpHeaders);
         response.setHeader(JWT_HEADER_NAME, jwt);
-        return ResultUtil.getSuccessVO();
+        return ResultVO.getSuccessVO();
     }
 }

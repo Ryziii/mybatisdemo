@@ -3,7 +3,7 @@ package com.rysiw.demo.controller;
 
 import com.rysiw.demo.annotations.VerifyToken;
 import com.rysiw.demo.common.constant.RespCode;
-import com.rysiw.demo.common.utils.ResultUtil;
+import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.UserService;
@@ -51,7 +51,7 @@ public class UserController {
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public ResultVO<Object> insert(UserEntity user){
-        return ResultUtil.resultDTO2resultVO(userService.insertUser(user));
+        return ResultDTO.resultDTO2resultVO(userService.insertUser(user));
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -66,6 +66,6 @@ public class UserController {
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public ResultVO<Object> deleteById(@PathVariable Long id){
-        return ResultUtil.resultDTO2resultVO(userService.deleteById(id));
+        return ResultDTO.resultDTO2resultVO(userService.deleteById(id));
     }
 }
