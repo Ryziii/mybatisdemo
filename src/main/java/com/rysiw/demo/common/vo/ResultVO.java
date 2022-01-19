@@ -9,7 +9,6 @@ import lombok.Data;
 
 @Data
 @Builder
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultVO<T> {
      private String code;
@@ -18,6 +17,11 @@ public class ResultVO<T> {
 
      public ResultVO(){
 
+     }
+     public ResultVO(String code, String msg, T data){
+          this.code = code;
+          this.msg = msg;
+          this.data = data;
      }
 
      public ResultVO<T> buildSuccess(){
@@ -37,7 +41,7 @@ public class ResultVO<T> {
           ResultVO resultVO = new ResultVO();
           resultVO.code = e.getErrorCode();
           resultVO.msg = e.getMessage();
-          resultVO.data = e.getData();
+          resultVO.data = e.getData().toString();
           return resultVO;
      }
 
@@ -55,6 +59,10 @@ public class ResultVO<T> {
 
      public static ResultVO<Object> getSuccessVO(String msg){
           return ResultVO.builder().code(RespCode.SUCCESS.getCode()).msg(msg).build();
+     }
+
+     public static <T> ResultVO<T> successWithData(T data){
+          return new ResultVO(RespCode.SUCCESS.getCode(), RespCode.SUCCESS.getMsg(), data);
      }
 
      public static ResultVO<Object> getErrorVO() {

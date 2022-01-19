@@ -35,6 +35,6 @@ public class TestController {
 
     @RequestMapping("/exception")
     public String exception() {
-        throw new DefineException(2,"22");
+        throw new DefineException("2","22");
     }
 }

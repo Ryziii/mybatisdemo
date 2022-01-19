@@ -30,7 +30,7 @@ public class DefineException extends RuntimeException{
     }
 
     public DefineException(Object data){
-        super(RespCode.ERROR.getMsg());
+        super(((Exception)data).getMessage());
         this.errorCode = RespCode.ERROR.getCode();
         this.data = data;
     }
