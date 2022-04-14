@@ -19,6 +19,11 @@ spring:
         max-wait: 1
         max-idle: 8
         min-idle: 0
+  data:
+    mongodb:
+      host: 127.0.0.1
+      database: testcis
+      port: 27017
 
 pagehelper:
   helper-dialect: mysql

@@ -1,6 +1,5 @@
 package com.rysiw.demo.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
 import com.rysiw.demo.entity.UserEntity;
 import org.apache.ibatis.annotations.*;
@@ -8,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface SystemInteractTimeMapper {
 
     @Select("SELECT * FROM users ")
     List<UserEntity> getAllBetweenTime();
