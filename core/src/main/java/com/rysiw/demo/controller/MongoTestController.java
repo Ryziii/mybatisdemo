@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author WuRuiZhi
@@ -22,15 +21,15 @@ public class MongoTestController {
     private MongoTestService mongoTestService;
 
     @PostMapping("/add")
-    public boolean addStory(@RequestParam JSONArray jsonAr){
+    public boolean addStory(@RequestBody JSONArray jsonAr){
         List<JSONObject> jsonObjectList = jsonAr.toJavaList(JSONObject.class);
         for (JSONObject json : jsonObjectList){
-            String idNum = json.get("idNum").toString();
-            String associatedRecordId = json.get("associatedRecordId").toString();
+            String idNum = String.valueOf(json.get("idNum"));
+            String associatedRecordId = String.valueOf(json.get("associatedRecordId"));
             MongoTestEntity mongoTestEntity = new MongoTestEntity();
             mongoTestEntity.setAssociatedRecordId(associatedRecordId);
             mongoTestEntity.setIdNum(idNum);
-            JSONArray jsonArray = new JSONArray();
+            JSONArray jsonArray = new JSONArray(jsonAr);
             mongoTestEntity.setEntCaseInfo(jsonArray);
             mongoTestEntity.setPunishBreak(jsonArray);
             mongoTestEntity.setPunished(jsonArray);

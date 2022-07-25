@@ -6,7 +6,7 @@ import com.rysiw.demo.common.constant.RespCode;
 import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;
-import com.rysiw.demo.service.UserService;
+import com.rysiw.demo.service.impl.UserService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

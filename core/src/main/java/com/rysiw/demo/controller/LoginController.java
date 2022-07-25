@@ -1,11 +1,10 @@
 package com.rysiw.demo.controller;
 
-import com.rysiw.demo.common.utils.ResultUtil;
 import com.rysiw.demo.common.vo.ResultVO;
 import com.rysiw.demo.entity.UserEntity;
 import com.rysiw.demo.service.AuthorizationService;
 import com.rysiw.demo.service.TokenService;
-import com.rysiw.demo.service.UserService;
+import com.rysiw.demo.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.validation.annotation.Validated;

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<UserEntity>{
 
     @Select("SELECT * FROM users ")
     List<UserEntity> getAllBetweenTime();
@@ -22,7 +22,7 @@ public interface UserMapper {
     @Insert("INSERT INTO users(username,password,phone,email)" +
             "VALUES(#{username}, #{password}, #{phone}, #{email})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    void insert(UserEntity userEntity);
+    int insert(UserEntity userEntity);
 
     @Update("UPDATE users SET username=#{username}, password=#{password}, phone=#{phone}, email=#{email} WHERE id=#{id}")
     Long update(UserEntity user);

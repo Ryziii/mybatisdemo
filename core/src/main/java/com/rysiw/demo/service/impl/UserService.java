@@ -1,12 +1,12 @@
 package com.rysiw.demo.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.rysiw.demo.common.constant.RespCode;
 import com.rysiw.demo.common.dto.ResultDTO;
 import com.rysiw.demo.dao.UserMapper;
 import com.rysiw.demo.entity.UserEntity;
-import com.rysiw.demo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService extends ServiceImpl<UserMapper, UserEntity> {
 
-    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserMapper userMapper;
 
-    @Override
     public Map<String, Object> getAll(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         PageInfo<UserEntity> pageInfo = new PageInfo<>(userMapper.getAll());
@@ -38,14 +37,14 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
-    @Override
+    
     public UserEntity getUserById(Long id) {
         UserEntity user = userMapper.getUserById(id);
         logger.info("通过id：{}查找用户，查找结果：{}",id,user);
         return user;
     }
 
-    @Override
+    
     public ResultDTO insertUser(UserEntity userEntity) {
         try {
             logger.info("插入用户{}", userEntity);
@@ -76,13 +75,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
+    
     public Boolean update(UserEntity userEntity) {
         Long res = userMapper.update(userEntity);
         return userMapper.update(userEntity) != 0;
     }
 
-    @Override
+    
     public ResultDTO deleteById(Long id) {
         try {
             return userMapper.delete(id) == 0 ? ResultDTO.builder().code(RespCode.SUCCESS.getCode()).msg("删除失败，无影响行数").build()
@@ -92,7 +91,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
+    
     public UserEntity getUserByUsername(String username) {
         try{
             return userMapper.getUserByUsername(username);
@@ -101,4 +100,5 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
 }

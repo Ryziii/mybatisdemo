@@ -32,4 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 /out/
-/core/src/main/java/com/rysiw/demo/entity/associated/*
+/core/src/main/java/com/rysiw/demo/entity/associated
