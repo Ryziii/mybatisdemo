@@ -4,13 +4,13 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 120.48.9.152:8848
+        server-addr: 192.168.50.12:8848
         sharedConfigs: public.properties
         file-extension: yaml
         refresh-enabled: true
         namespace: public
       discovery:
-        server-addr: 120.48.9.152:8848
+        server-addr: 192.168.50.12:8848
         namespace: public
   profiles:
     active: dev
