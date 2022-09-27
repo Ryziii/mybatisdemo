@@ -8,6 +8,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.StopWatch;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
 import com.alibaba.fastjson.JSONArray;
@@ -32,6 +33,8 @@ public class StringTest {
 
     @Autowired
     private UserService userService;
+    private static final byte[] key = {-51, 49, -80, -73, -94, 80, -23, 55, -110, -54, -89, 88, 58, 83, 30, 113};
+
 
     @Test
     public void test5(){
@@ -278,5 +281,41 @@ public class StringTest {
         }).collect(Collectors.toList());
 
         return result;
+    }
+
+    @Test
+    public void test6(){
+        System.out.println(encryptId(""));
+//        System.out.println(deSensitive("13123232323", 3,4));
+    }
+
+    public static String deSensitive(String personId, int pre, int post) {
+        if (StrUtil.isBlank(personId)) {
+            return personId;
+        }
+        StringBuilder sb = new StringBuilder();
+        if (personId.length() <= pre + post) {
+            for (char c : personId.toCharArray()) {
+                sb.append("*");
+            }
+        } else {
+            int i = 0;
+            for (; i < personId.length() - post; i++) {
+                if (i < pre) {
+                    sb.append(personId.charAt(i));
+                } else {
+                    sb.append("*");
+                }
+            }
+            for (; i < personId.length(); i++) {
+                sb.append(personId.charAt(i));
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String encryptId(String id){
+        SymmetricCrypto aes = new SymmetricCrypto(SymmetricAlgorithm.AES, key);
+        return aes.encryptHex(id);
     }
 }
