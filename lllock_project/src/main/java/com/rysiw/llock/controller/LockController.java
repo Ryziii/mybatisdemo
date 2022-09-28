@@ -1,6 +1,5 @@
 package com.rysiw.llock.controller;
 
-import com.rysiw.llock.pojo.Stock;
 import com.rysiw.llock.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +21,11 @@ public class LockController {
     @GetMapping("/get")
     public String getStock(){
         return productService.buyProduct();
+    }
+
+    @GetMapping("/getStockAtomicSql")
+    public String getStockAtomicSql(){
+        return productService.buyProductAtomicSql();
     }
 
 }
